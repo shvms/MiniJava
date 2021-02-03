@@ -9,6 +9,6 @@ public class PrintStm extends Stm {
 
     @Override
     public int maxargs() {
-        return expList.length();
+        return Integer.max(expList.length(), expList.maxargs());
     }
 }

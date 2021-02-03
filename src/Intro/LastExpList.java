@@ -8,6 +8,11 @@ public class LastExpList extends ExpList {
     }
 
     @Override
+    public int maxargs() {
+        return exp.maxargs();
+    }
+
+    @Override
     public int length() {
         return 1;
     }

@@ -10,6 +10,11 @@ public class PairExpList extends ExpList {
     }
 
     @Override
+    public int maxargs() {
+        return Integer.max(head.maxargs(), tail.maxargs());
+    }
+
+    @Override
     public int length() {
         return 1 + tail.length();
     }
