@@ -8,4 +8,9 @@ public class AssignStm extends Stm {
         id = i;
         exp = e;
     }
+
+    @Override
+    public int maxargs() {
+        return exp.maxargs();
+    }
 }

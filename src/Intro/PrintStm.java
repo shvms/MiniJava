@@ -6,4 +6,9 @@ public class PrintStm extends Stm {
     public PrintStm(ExpList el) {
         expList = el;
     }
+
+    @Override
+    public int maxargs() {
+        return expList.length();
+    }
 }

@@ -6,4 +6,9 @@ public class NumExp extends Exp {
     public NumExp(int n) {
         num = n;
     }
+
+    @Override
+    public int maxargs() {
+        return 0;
+    }
 }

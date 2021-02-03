@@ -8,4 +8,9 @@ public class EseqExp extends Exp {
         stm = s;
         exp = e;
     }
+
+    @Override
+    public int maxargs() {
+        return Integer.max(stm.maxargs(), exp.maxargs());
+    }
 }

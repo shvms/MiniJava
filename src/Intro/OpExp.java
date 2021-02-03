@@ -10,4 +10,9 @@ public class OpExp extends Exp {
         oper = o;
         rightExp = re;
     }
+
+    @Override
+    public int maxargs() {
+        return Integer.max(leftExp.maxargs(), rightExp.maxargs());
+    }
 }

@@ -8,4 +8,9 @@ public class PairExpList extends ExpList {
         head = h;
         tail = t;
     }
+
+    @Override
+    public int length() {
+        return 1 + tail.length();
+    }
 }

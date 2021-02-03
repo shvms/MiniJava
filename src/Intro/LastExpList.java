@@ -6,4 +6,9 @@ public class LastExpList extends ExpList {
     public LastExpList(Exp e) {
         exp = e;
     }
+
+    @Override
+    public int length() {
+        return 1;
+    }
 }
