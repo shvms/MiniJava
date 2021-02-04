@@ -1,21 +1,25 @@
 package Intro;
 
 public class PairExpList extends ExpList {
-    public Exp head;
     public ExpList tail;
 
-    public PairExpList(Exp h, ExpList t) {
-        head = h;
+    public PairExpList(Exp e, ExpList t) {
+        exp = e;
         tail = t;
     }
 
     @Override
     public int maxargs() {
-        return Integer.max(head.maxargs(), tail.maxargs());
+        return Integer.max(exp.maxargs(), tail.maxargs());
     }
 
     @Override
     public int length() {
         return 1 + tail.length();
+    }
+
+    @Override
+    public ExpList next() {
+        return tail;
     }
 }

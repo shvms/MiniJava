@@ -1,8 +1,6 @@
 package Intro;
 
 public class LastExpList extends ExpList {
-    public Exp exp;
-
     public LastExpList(Exp e) {
         exp = e;
     }
@@ -15,5 +13,10 @@ public class LastExpList extends ExpList {
     @Override
     public int length() {
         return 1;
+    }
+
+    @Override
+    public ExpList next() {
+        return null;
     }
 }

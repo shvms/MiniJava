@@ -1,7 +1,7 @@
 package Intro;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         /* Program
          a := 5 + 3 ; b := ( print ( a, a - 1 ) , 10 * a ) ; print ( b )
 
@@ -42,5 +42,11 @@ public class Main {
         );
 
         System.out.println("Maximum arguments in a `print` statement in `program` = " + program.maxargs());
+
+        System.out.println("============= Program Output =============");
+        Table t = program.interpStm(new Table("_", 0, null));
+
+        System.out.println("============= Symbol Table =============");
+        t.printTable();
     }
 }

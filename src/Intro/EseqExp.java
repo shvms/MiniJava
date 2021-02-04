@@ -13,4 +13,11 @@ public class EseqExp extends Exp {
     public int maxargs() {
         return Integer.max(stm.maxargs(), exp.maxargs());
     }
+
+    @Override
+    public PairTableInt interpExp(Table t) throws Exception {
+        Table t1 = stm.interpStm(t);
+
+        return exp.interpExp(t1);
+    }
 }

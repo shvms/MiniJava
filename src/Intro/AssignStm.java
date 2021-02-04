@@ -13,4 +13,10 @@ public class AssignStm extends Stm {
     public int maxargs() {
         return exp.maxargs();
     }
+
+    @Override
+    public Table interpStm(Table t) throws Exception {
+        PairTableInt pair = exp.interpExp(t);
+        return pair.table.update(id, pair.retVal);
+    }
 }

@@ -11,4 +11,9 @@ public class IdExp extends Exp {
     public int maxargs() {
         return 0;
     }
+
+    @Override
+    public PairTableInt interpExp(Table t) throws IdentifierNotDefinedException {
+        return new PairTableInt(t.lookup(id), t);
+    }
 }

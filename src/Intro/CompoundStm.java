@@ -12,4 +12,10 @@ public class CompoundStm extends Stm {
     public int maxargs() {
         return Integer.max(stm1.maxargs(), stm2.maxargs());
     }
+
+    @Override
+    public Table interpStm(Table t) throws Exception {
+        Table t1 = stm1.interpStm(t);
+        return stm2.interpStm(t1);
+    }
 }
