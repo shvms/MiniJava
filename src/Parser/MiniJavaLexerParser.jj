@@ -79,9 +79,11 @@ void MainClass():
 
 void ClassDecl():
 {}
-{ <CLASS> <IDENTIFIER> <LBRACE>
-    (VarDecl())* (MethodDecl())*
-<RBRACE> }
+{
+    LOOKAHEAD(3)
+    <CLASS> <IDENTIFIER> <LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>     |
+    <CLASS> <IDENTIFIER> <EXTENDS> <IDENTIFIER> <LBRACE> (VarDecl())* (MethodDecl())* <RBRACE>
+}
 
 void VarDecl():
 {}
@@ -95,7 +97,7 @@ void MethodDecl():
 
 void FormalList():
 {}
-{ Type() <IDENTIFIER> (FormalRest())? }
+{ (Type() <IDENTIFIER> (FormalRest())*)? }
 
 void FormalRest():
 {}
