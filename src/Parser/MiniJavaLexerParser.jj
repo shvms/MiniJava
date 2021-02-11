@@ -1,0 +1,54 @@
+options {
+  JAVA_UNICODE_ESCAPE = true;
+}
+
+PARSER_BEGIN(MiniJavaParser)
+  package Parser;
+  public class MiniJavaParser {}
+PARSER_END(MiniJavaParser)
+
+
+/* Tokens */
+TOKEN : {
+    < CLASS: "class" >                               |
+    < LBRACE: "{" >                                  |
+    < RBRACE: "}" >                                  |
+    < PUBLIC: "public" >                             |
+    < STATIC: "static" >                             |
+    < VOID: "void" >                                 |
+    < STRING: "String" >                             |
+    < RET_TYPE: <VOID> | <TYPE> >                    |
+    < MAIN: "main" >                                 |
+    < TYPE: "int" | "boolean" | "String" >           |
+    < EXTENDS: "extends" >                           |
+    < RETURN: "return" >                             |
+    < IF: "if" >                                     |
+    < ELSE: "else" >                                 |
+    < WHILE: "while" >                               |
+    < BOOL_VAL: "true" | "false" >                   |
+    < LENGTH: "length" >                             |
+    < THIS: "this" >                                 |
+    < NEW: "new" >                                   |
+    < LPAREN: "(" >                                  |
+    < RPAREN: ")" >                                  |
+    < MUL_OP: "*" | "/" >                            |
+    < ADD_OP: "+" | "-" >                            |
+    < PRINT: "System.out.println" >                  |
+    < LSQUARE: "[" >                                 |
+    < RSQUARE: "]" >                                 |
+    < COMPARE_OP: ">" | "<" >                        |
+    < ASSIGN: "=" >                                  |
+    < IDENTIFIER: <LETTER> (<LETTER> | <DIGIT>)* >   |
+    < INTEGER_LITERAL: (<DIGIT>)+ >                  |
+    < #LETTER: ["_", "a"-"z", "A"-"Z"] >             |
+    < #DIGIT:  ["0"-"9"] >
+}
+
+SKIP : {
+    " "     |
+    "\t"    |
+    "\n"    |
+    "\r"    |
+    < "//" (~["\r", "\n"])* ("\r" | "\n" | "\r\n") >    |
+    < "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" >
+}
