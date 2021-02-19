@@ -1,0 +1,304 @@
+options {
+    JAVA_UNICODE_ESCAPE = true;
+    STATIC = false;
+    MULTI = true;
+    VISITOR = true;
+    NODE_DEFAULT_VOID = false;
+    NODE_EXTENDS = "TNode";
+    LOOKAHEAD = 3;
+    FORCE_LA_CHECK = true;
+}
+
+PARSER_BEGIN(MiniJavaParser)
+package AST;
+
+import java.io.*;
+public class MiniJavaParser {
+    public static void main(String[] args){
+        MiniJavaParser minij = null;
+
+        if (args.length > 0) {
+            System.out.println("Reading " + args[0] + "...");
+            try {
+                InputStream istream = new FileInputStream(new File(args[0]));
+                minij = new MiniJavaParser(istream);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Reading from standard input...");
+            minij = new MiniJavaParser(System.in);
+        }
+
+        try {
+            SimpleNode n = minij.Program();
+            PrettyPrintVisitor prettyPrintVisitor = new PrettyPrintVisitor();
+            n.jjtAccept(prettyPrintVisitor, null);
+        } catch (Exception e) {
+            System.out.println("Something went downside: " + e.getMessage());
+            e.printStackTrace();
+    }
+}
+}
+PARSER_END(MiniJavaParser)
+
+TOKEN : {
+    < CLASS: "class" >                               |
+    < LBRACE: "{" >                                  |
+    < RBRACE: "}" >                                  |
+    < PUBLIC: "public" >                             |
+    < STATIC: "static" >                             |
+    < VOID: "void" >                                 |
+    < STRING: "String" >                             |
+    < INT: "int" >                                   |
+    < BOOLEAN: "boolean" >                           |
+    < MAIN: "main" >                                 |
+    < EXTENDS: "extends" >                           |
+    < RETURN: "return" >                             |
+    < IF: "if" >                                     |
+    < ELSE: "else" >                                 |
+    < WHILE: "while" >                               |
+    < TRUE: "true" >                                 |
+    < FALSE: "false" >                               |
+    < LENGTH: "length" >                             |
+    < THIS: "this" >                                 |
+    < NEW: "new" >                                   |
+    < LPAREN: "(" >                                  |
+    < RPAREN: ")" >                                  |
+    < AND: "&&" >                                    |
+    < STAR: "*" >                                    |
+    < FSLASH: "/" >                                  |
+    < PLUS: "+" >                                    |
+    < MINUS: "-" >                                   |
+    < PRINT: "System.out.println" >                  |
+    < LSQUARE: "[" >                                 |
+    < RSQUARE: "]" >                                 |
+    < GT: ">" >                                      |
+    < LT: "<" >                                      |
+    < ASSIGN: "=" >                                  |
+    < SEMI: ";" >                                    |
+    < COMMA: "," >                                   |
+    < DOT: "." >                                     |
+    < EXCLAIM: "!" >                                 |
+    < IDENTIFIER: <LETTER> (<LETTER> | <DIGIT>)* >   |
+    < INTEGER_LITERAL: (<DIGIT>)+ >                  |
+    < #LETTER: ["_", "a"-"z", "A"-"Z"] >             |
+    < #DIGIT:  ["0"-"9"] >
+}
+
+SKIP : {
+    " "     |
+    "\t"    |
+    "\n"    |
+    "\r"    |
+    < "//" (~["\r", "\n"])* ("\r" | "\n" | "\r\n") >    |
+    < "/*" (~["*"])* "*" (~["/"] (~["*"])* "*")* "/" >
+}
+
+
+/* ====== Grammar Rules with Semantic actions ====== */
+SimpleNode Program(): {}
+{
+    MainClass() (ClassDecl())* <EOF>
+    { return jjtThis; }
+}
+
+void MainClass(): {}
+{
+    <CLASS> Identifier() <LBRACE>
+        <PUBLIC> <STATIC> <VOID> <MAIN> <LPAREN> <STRING> <LSQUARE> <RSQUARE> Identifier() <RPAREN> <LBRACE>
+            Statement()
+        <RBRACE>
+    <RBRACE>
+}
+
+void ClassDecl() #void: {}
+{
+    LOOKAHEAD(3) ClassDeclSimple()       |
+    LOOKAHEAD(3) ClassDeclExtends()
+}
+
+void ClassDeclSimple(): {}
+{
+    <CLASS> Identifier() <LBRACE>
+        (VarDecl())* (MethodDecl())*
+    <RBRACE>
+}
+
+void ClassDeclExtends(): {}
+{
+    <CLASS> Identifier() <EXTENDS> Identifier() <LBRACE>
+        (VarDecl())* (MethodDecl())*
+    <RBRACE>
+}
+
+void VarDecl(): {}
+{
+    Type() Identifier() <SEMI>
+}
+
+void MethodDecl(): {}
+{
+    <PUBLIC> Type() Identifier() <LPAREN> FormalList() <RPAREN> <LBRACE>
+        (LOOKAHEAD(2) VarDecl())* (Statement())* <RETURN> Exp() <SEMI>
+    <RBRACE>
+}
+
+void FormalList(): {}
+{
+    (Type() Identifier() (FormalRest())*)?
+}
+
+void FormalRest(): {}
+{
+    <COMMA> Type() Identifier()
+}
+
+void Type(): {}
+{
+    <BOOLEAN>       { jjtThis.token = token; }          |
+    LOOKAHEAD(2) <INT> <LSQUARE> <RSQUARE>  { jjtThis.token = token; jjtThis.token.image = "int[]"; }        |
+    LOOKAHEAD(2) <INT>      { jjtThis.token = token; }          |
+    <VOID>          { jjtThis.token = token; }      |
+    Identifier()
+}
+
+void Statement() #void: {}
+{
+    Block()         |
+    If()            |
+    While()         |
+    Print()         |
+    LOOKAHEAD(2) Assign()     |
+    LOOKAHEAD(2) ArrayAssign()
+}
+
+void Block(): {}
+{ <LBRACE> (Statement())* <RBRACE> }
+
+void If(): {}
+{ <IF> <LPAREN> Exp() <RPAREN> Statement() (LOOKAHEAD(<ELSE>) <ELSE> Statement())? }
+
+void While(): {}
+{ <WHILE> <LPAREN> Exp() <RPAREN> Statement() }
+
+void Print(): {}
+{ <PRINT> <LPAREN> Exp() <RPAREN> <SEMI> }
+
+void Assign(): {}
+{ Identifier() <ASSIGN> Exp() <SEMI> }
+
+void ArrayAssign(): {}
+{ Identifier() <LSQUARE> Exp() <RSQUARE> <ASSIGN> Exp() <SEMI> }
+
+void Exp() #void: {}
+{
+    RelationalExp()
+}
+
+void RelationalExp() #void: {}
+{
+    ArrayExp() (LOOKAHEAD(2) RelationalOperator() ArrayExp())*  #RelationalExp(>1)
+}
+
+void ArrayExp() #void: {}
+{
+    CallExp() (LOOKAHEAD(2) <LSQUARE> CallExp() <RSQUARE>)*   #ArrayExp(>1)
+}
+
+void CallExp() #void: {}
+{
+    Identifier() (<DOT> Identifier() <LPAREN> ExpList() <RPAREN>)+ #CallExp(>1)     |
+    AdditiveExp() (<DOT> Identifier() <LPAREN> ExpList() <RPAREN>)*  #CallExp(>1)
+}
+
+void AdditiveExp() #void: {}
+{
+    MultiplicativeExp() (AdditiveOperator() MultiplicativeExp() #AdditiveExp(2))*
+}
+
+void MultiplicativeExp() #void: {}
+{
+    UnaryExp() (MultiplicativeOperator() UnaryExp()  #MultiplicativeExp(2))*
+}
+
+void UnaryExp() #void: {}
+{
+    IntegerLiteral()        |
+    BooleanLiteral()        |
+    ThisLiteral()           |
+    LOOKAHEAD(Identifier() <DOT>) LengthExp()             |
+    Identifier()            |
+    LOOKAHEAD(2) NewClassExp() |
+    LOOKAHEAD(2) NewIntExp()   |
+    NotExp()                |
+    <LPAREN> Exp() <RPAREN>
+}
+
+void LengthExp(): {}
+{
+    Identifier() (<DOT> <LENGTH>)+
+}
+
+void RelationalOperator(): {}
+{ (<LT> | <GT> | <AND>) { jjtThis.token = token; } }
+
+void AdditiveOperator(): {}
+{
+    (<PLUS> | <MINUS>) { jjtThis.token = token; }
+}
+
+void MultiplicativeOperator(): {}
+{
+    (<STAR> | <FSLASH>) { jjtThis.token = token; }
+}
+
+void IntegerLiteral() #void: {Token t;}
+{
+    (
+        t = <INTEGER_LITERAL>
+        { jjtThis.token = t; }
+    ) #IntegerConstNode
+}
+
+void BooleanLiteral() #void: {}
+{
+    <TRUE> #TrueNode        |
+    <FALSE> #FalseNode
+}
+
+void ThisLiteral() #void: {}
+{
+    <THIS> #ThisNode
+}
+
+void NewIntExp() #NewIntArrayNode: {}
+{
+    <NEW> <INT> <LSQUARE> Exp() <RSQUARE>
+}
+
+void NewClassExp() #NewClassNode: {}
+{
+    <NEW> Identifier() <LPAREN> <RPAREN>
+}
+
+void NotExp() #NotNode: {}
+{
+    <EXCLAIM> Exp()
+}
+
+void Identifier(): {Token t;}
+{
+    t = <IDENTIFIER>
+    { jjtThis.token = t; }
+}
+
+void ExpList(): {}
+{
+    (Exp() (ExpRest())*)?
+}
+
+void ExpRest(): {}
+{
+    <COMMA> Exp()
+}
