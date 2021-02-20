@@ -2,3 +2,10 @@
 out/
 javacc-javacc-7.0.9/
 *.jar
+src/AST/*.java
+
+!src/AST/MiniJavaAst.jjt
+!src/AST/PrettyPrintVisitor.java
+!src/AST/TNode.java
+
+!*.md
