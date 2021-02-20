@@ -3,6 +3,10 @@ out/
 javacc-javacc-7.0.9/
 *.jar
 
+src/Lexer/*
+!src/Lexer/*.jj
+!src/Lexer/Main.java
+
 src/Parser/*
 !src/Parser/*.jj
 !src/Parser/Main.java
