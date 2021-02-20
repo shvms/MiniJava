@@ -10,6 +10,7 @@ public interface MiniJavaParserVisitor
   public Object visit(ASTClassDeclExtends node, Object data);
   public Object visit(ASTVarDecl node, Object data);
   public Object visit(ASTMethodDecl node, Object data);
+  public Object visit(ASTReturnStm node, Object data);
   public Object visit(ASTFormalList node, Object data);
   public Object visit(ASTFormalRest node, Object data);
   public Object visit(ASTType node, Object data);
@@ -39,4 +40,4 @@ public interface MiniJavaParserVisitor
   public Object visit(ASTExpList node, Object data);
   public Object visit(ASTExpRest node, Object data);
 }
-/* JavaCC - OriginalChecksum=705cb0ee5d4dee0d2774428d976c1f3c (do not edit this line) */
+/* JavaCC - OriginalChecksum=b256f80d761f56a3c9e73df0e6844ef5 (do not edit this line) */

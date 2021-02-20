@@ -42,6 +42,9 @@ public class PrettyPrintVisitor implements MiniJavaParserVisitor {
     public Object visit(ASTMethodDecl node, Object data){
         return defaultVisit(node, data);
     }
+    public Object visit(ASTReturnStm node, Object data) {
+        return defaultVisit(node, data);
+    }
     public Object visit(ASTFormalList node, Object data){
         return defaultVisit(node, data);
     }

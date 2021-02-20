@@ -27,6 +27,9 @@ public class MiniJavaParserDefaultVisitor implements MiniJavaParserVisitor{
   public Object visit(ASTMethodDecl node, Object data){
     return defaultVisit(node, data);
   }
+  public Object visit(ASTReturnStm node, Object data){
+    return defaultVisit(node, data);
+  }
   public Object visit(ASTFormalList node, Object data){
     return defaultVisit(node, data);
   }
@@ -112,4 +115,4 @@ public class MiniJavaParserDefaultVisitor implements MiniJavaParserVisitor{
     return defaultVisit(node, data);
   }
 }
-/* JavaCC - OriginalChecksum=a5f66e3c68bb6583ed7fd83e94c7a84e (do not edit this line) */
+/* JavaCC - OriginalChecksum=c89d380ffa6976941e9e0b4e872ba308 (do not edit this line) */

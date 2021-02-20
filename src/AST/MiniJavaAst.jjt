@@ -140,8 +140,13 @@ void VarDecl(): {}
 void MethodDecl(): {}
 {
     <PUBLIC> Type() Identifier() <LPAREN> FormalList() <RPAREN> <LBRACE>
-        (LOOKAHEAD(2) VarDecl())* (Statement())* <RETURN> Exp() <SEMI>
+        (LOOKAHEAD(2) VarDecl())* (Statement())* ReturnStm() <SEMI>
     <RBRACE>
+}
+
+void ReturnStm(): {}
+{
+    <RETURN> Exp()
 }
 
 void FormalList(): {}

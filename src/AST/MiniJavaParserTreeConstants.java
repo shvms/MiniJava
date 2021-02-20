@@ -10,34 +10,35 @@ public interface MiniJavaParserTreeConstants
   public int JJTCLASSDECLEXTENDS = 4;
   public int JJTVARDECL = 5;
   public int JJTMETHODDECL = 6;
-  public int JJTFORMALLIST = 7;
-  public int JJTFORMALREST = 8;
-  public int JJTTYPE = 9;
-  public int JJTBLOCK = 10;
-  public int JJTIF = 11;
-  public int JJTWHILE = 12;
-  public int JJTPRINT = 13;
-  public int JJTASSIGN = 14;
-  public int JJTARRAYASSIGN = 15;
-  public int JJTRELATIONALEXP = 16;
-  public int JJTARRAYEXP = 17;
-  public int JJTCALLEXP = 18;
-  public int JJTADDITIVEEXP = 19;
-  public int JJTMULTIPLICATIVEEXP = 20;
-  public int JJTLENGTHEXP = 21;
-  public int JJTRELATIONALOPERATOR = 22;
-  public int JJTADDITIVEOPERATOR = 23;
-  public int JJTMULTIPLICATIVEOPERATOR = 24;
-  public int JJTINTEGERCONSTNODE = 25;
-  public int JJTTRUENODE = 26;
-  public int JJTFALSENODE = 27;
-  public int JJTTHISNODE = 28;
-  public int JJTNEWINTARRAYNODE = 29;
-  public int JJTNEWCLASSNODE = 30;
-  public int JJTNOTNODE = 31;
-  public int JJTIDENTIFIER = 32;
-  public int JJTEXPLIST = 33;
-  public int JJTEXPREST = 34;
+  public int JJTRETURNSTM = 7;
+  public int JJTFORMALLIST = 8;
+  public int JJTFORMALREST = 9;
+  public int JJTTYPE = 10;
+  public int JJTBLOCK = 11;
+  public int JJTIF = 12;
+  public int JJTWHILE = 13;
+  public int JJTPRINT = 14;
+  public int JJTASSIGN = 15;
+  public int JJTARRAYASSIGN = 16;
+  public int JJTRELATIONALEXP = 17;
+  public int JJTARRAYEXP = 18;
+  public int JJTCALLEXP = 19;
+  public int JJTADDITIVEEXP = 20;
+  public int JJTMULTIPLICATIVEEXP = 21;
+  public int JJTLENGTHEXP = 22;
+  public int JJTRELATIONALOPERATOR = 23;
+  public int JJTADDITIVEOPERATOR = 24;
+  public int JJTMULTIPLICATIVEOPERATOR = 25;
+  public int JJTINTEGERCONSTNODE = 26;
+  public int JJTTRUENODE = 27;
+  public int JJTFALSENODE = 28;
+  public int JJTTHISNODE = 29;
+  public int JJTNEWINTARRAYNODE = 30;
+  public int JJTNEWCLASSNODE = 31;
+  public int JJTNOTNODE = 32;
+  public int JJTIDENTIFIER = 33;
+  public int JJTEXPLIST = 34;
+  public int JJTEXPREST = 35;
 
 
   public String[] jjtNodeName = {
@@ -48,6 +49,7 @@ public interface MiniJavaParserTreeConstants
     "ClassDeclExtends",
     "VarDecl",
     "MethodDecl",
+    "ReturnStm",
     "FormalList",
     "FormalRest",
     "Type",
@@ -78,4 +80,4 @@ public interface MiniJavaParserTreeConstants
     "ExpRest",
   };
 }
-/* JavaCC - OriginalChecksum=c6ab76316ed278a86d2f73c276812931 (do not edit this line) */
+/* JavaCC - OriginalChecksum=e40824ae8cf44a37faeb9bead172656f (do not edit this line) */
