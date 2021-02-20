@@ -92,9 +92,6 @@ public class PrettyPrintVisitor implements MiniJavaParserVisitor {
     public Object visit(ASTLengthExp node, Object data) {
         return defaultVisit(node, data);
     }
-    public Object visit(ASTLengthNode node, Object data) {
-        return defaultVisit(node, data);
-    }
     public Object visit(ASTMultiplicativeOperator node, Object data){
         return defaultVisit(node, data);
     }
@@ -102,12 +99,6 @@ public class PrettyPrintVisitor implements MiniJavaParserVisitor {
         return defaultVisit(node, data);
     }
     public Object visit(ASTCallExp node, Object data){
-        return defaultVisit(node, data);
-    }
-    public Object visit(ASTDotLengthExp node, Object data){
-        return defaultVisit(node, data);
-    }
-    public Object visit(ASTDotExp node, Object data){
         return defaultVisit(node, data);
     }
     public Object visit(ASTIntegerConstNode node, Object data){
