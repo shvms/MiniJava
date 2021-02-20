@@ -2,9 +2,13 @@
 out/
 javacc-javacc-7.0.9/
 *.jar
-src/AST/*.java
 
-!src/AST/MiniJavaAst.jjt
+src/Parser/*
+!src/Parser/*.jj
+!src/Parser/Main.java
+
+src/AST/*
+!src/AST/*.jjt
 !src/AST/PrettyPrintVisitor.java
 !src/AST/TNode.java
 
