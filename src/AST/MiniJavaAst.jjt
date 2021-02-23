@@ -112,22 +112,9 @@ void MainClass(): {}
     <RBRACE>
 }
 
-void ClassDecl() #void: {}
+void ClassDecl(): {}
 {
-    LOOKAHEAD(3) ClassDeclSimple()       |
-    LOOKAHEAD(3) ClassDeclExtends()
-}
-
-void ClassDeclSimple(): {}
-{
-    <CLASS> Identifier() <LBRACE>
-        (VarDecl())* (MethodDecl())*
-    <RBRACE>
-}
-
-void ClassDeclExtends(): {}
-{
-    <CLASS> Identifier() <EXTENDS> Identifier() <LBRACE>
+    <CLASS> Identifier() (<EXTENDS> Identifier())? <LBRACE>
         (VarDecl())* (MethodDecl())*
     <RBRACE>
 }

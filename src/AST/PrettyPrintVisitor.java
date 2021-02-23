@@ -30,10 +30,7 @@ public class PrettyPrintVisitor implements MiniJavaParserVisitor {
     public Object visit(ASTMainClass node, Object data){
         return defaultVisit(node, data);
     }
-    public Object visit(ASTClassDeclSimple node, Object data){
-        return defaultVisit(node, data);
-    }
-    public Object visit(ASTClassDeclExtends node, Object data){
+    public Object visit(ASTClassDecl node, Object data) {
         return defaultVisit(node, data);
     }
     public Object visit(ASTVarDecl node, Object data){
@@ -42,11 +39,9 @@ public class PrettyPrintVisitor implements MiniJavaParserVisitor {
     public Object visit(ASTMethodDecl node, Object data){
         return defaultVisit(node, data);
     }
-
     public Object visit(ASTReturnStm node, Object data) {
         return defaultVisit(node, data);
     }
-
     public Object visit(ASTFormalList node, Object data){
         return defaultVisit(node, data);
     }
